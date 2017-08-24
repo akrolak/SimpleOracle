@@ -43,7 +43,6 @@ contract('SimpleOracle', function(accounts) {
     contract.getResults.call().then((res)=> {
       console.log("random value="+res[0]);
       console.log("oracle time="+res[1]);
-      console.log("block time="+res[2]);
       assert.isOk(contract, "problem with contract");  
     });
   });
@@ -53,7 +52,7 @@ contract('SimpleOracle', function(accounts) {
     myEvent = contract.Query({fromBlock: number});
     myEvent.watch((err, response) => {
       console.log("caught event");
-      //myEvent.stopWatching();
+      myEvent.stopWatching();
       
       //this part emulates communication with data source
       var random = 1 + Math.random()*6|0;
@@ -67,11 +66,10 @@ contract('SimpleOracle', function(accounts) {
       }).then((res)=> {
         console.log("new random value="+res[0]);
         console.log("new oracle time="+res[1]);
-        console.log("new block time="+res[2]);
       });
     })
     //we registered the callback for event, now we can initaite the query
-    //contract.queryOracle.sendTransaction({from: owner, gas: 3000000});
+    contract.queryOracle.sendTransaction({from: owner, gas: 3000000});
     assert.isOk(contract, "problem with contract");  
   });
 

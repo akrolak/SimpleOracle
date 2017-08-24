@@ -47,7 +47,7 @@ function query() {
         refreshView();
         myEvent.stopWatching();
       }).catch(function(e) {
-        //console.log(e);
+        console.log(e);
       });
     })
     
